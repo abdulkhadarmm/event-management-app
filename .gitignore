@@ -1,0 +1,51 @@
+# ==========================================
+# Root Git Ignore - EventEasy SaaS Application
+# ==========================================
+
+# Target / Build Artifacts
+**/target/
+**/dist/
+**/build/
+**/out/
+*.jar
+*.war
+*.ear
+*.rar
+
+# Node / Frontend Dependencies
+**/node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.pnpm-debug.log*
+
+# Environment & Secret Files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.pem
+*.key
+*.crt
+
+# IDE & Editor Files
+.idea/
+*.iml
+.vscode/
+*.swp
+*.swo
+.ds_store
+Thumbs.db
+
+# Logs
+**/logs/
+*.log
+
+# Temp & Cache
+.cache/
+.vite/
+.eslintcache
+.temp/
+.tmp/

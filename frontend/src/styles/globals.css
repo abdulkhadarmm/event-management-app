@@ -1,0 +1,157 @@
+/* ==========================================================
+ * EventEasy Global Design System & Custom CSS Utilities
+ * ========================================================== */
+
+:root {
+  --color-primary-navy: #0F172A;
+  --color-accent-indigo: #6366F1;
+  --color-slate-dark: #0F172A;
+  --color-slate-light: #F8FAFC;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #0F172A;
+  background-color: #FFFFFF;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  /* Hide scrollbars globally across Firefox, IE, Edge */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Hide scrollbars globally across Chrome, Safari, Opera */
+::-webkit-scrollbar {
+  display: none;
+  width: 0px;
+  height: 0px;
+  background: transparent;
+}
+
+/* Glassmorphism Utility Classes */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  box-shadow: 0 20px 40px rgba(15, 23, 42, 0.08);
+}
+
+/* ==========================================================
+ * Interactive Card & Button Micro-Animations
+ * ========================================================== */
+
+/* 1. Interactive Card Hover & Lift Animation */
+.card-interactive {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  will-change: transform, box-shadow;
+  cursor: pointer;
+}
+
+.card-interactive:hover {
+  transform: translateY(-8px) scale(1.015);
+  box-shadow: 0 24px 48px -12px rgba(15, 23, 42, 0.16), 0 12px 24px -6px rgba(99, 102, 241, 0.12) !important;
+  border-color: rgba(99, 102, 241, 0.4) !important;
+}
+
+/* Smooth Image Zoom Inside Card on Hover */
+.card-interactive:hover .card-img-zoom {
+  transform: scale(1.08) rotate(0.5deg);
+}
+
+.card-img-zoom {
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  will-change: transform;
+}
+
+/* 2. Interactive Button Hover & Click Press Animation */
+.btn-animated, button, .ant-btn {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              color 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  will-change: transform, box-shadow;
+}
+
+.btn-animated:hover, button:hover, .ant-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px -4px rgba(15, 23, 42, 0.25);
+  filter: brightness(1.05);
+}
+
+.btn-animated:active, button:active, .ant-btn:active {
+  transform: translateY(1px) scale(0.97) !important;
+  box-shadow: 0 4px 10px -2px rgba(15, 23, 42, 0.15) !important;
+}
+
+/* Arrow Icon Nudge Animation inside Buttons & Links */
+.card-interactive:hover .anticon-right,
+.card-interactive:hover .anticon-arrow-right,
+.btn-animated:hover .anticon-arrow-right,
+.btn-animated:hover .anticon-right,
+.btn-animated:hover .anticon-right,
+button:hover .anticon-right,
+a:hover .anticon-right {
+  transform: translateX(5px);
+}
+
+.anticon-arrow-right, .anticon-right {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  will-change: transform;
+}
+
+/* ==========================================================
+ * Executive Print Layout CSS Rules
+ * ========================================================== */
+@media print {
+  body, html {
+    background: #FFFFFF !important;
+    color: #0F172A !important;
+    font-size: 12pt !important;
+  }
+
+  header, footer, nav, .ant-breadcrumb, .ant-btn, .top-action-toolbar, .no-print {
+    display: none !important;
+  }
+
+  .printable-event-plan {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    box-shadow: none !important;
+    border: none !important;
+    background: #FFFFFF !important;
+  }
+
+  .printable-event-plan .ant-card {
+    box-shadow: none !important;
+    border: 1px solid #CBD5E1 !important;
+    background: #FFFFFF !important;
+    break-inside: avoid;
+    margin-bottom: 16px !important;
+  }
+
+  .print-only-header {
+    display: flex !important;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #0F172A;
+    padding-bottom: 12px;
+    margin-bottom: 24px;
+  }
+}
+
+@media screen {
+  .print-only-header {
+    display: none !important;
+  }
+}
