@@ -1,0 +1,11 @@
+# ==============================================================================
+# EventEasy Local Secrets & Developer Overrides Template
+# Copy this file to "application-local.properties" in src/main/resources/
+# "application-local.properties" is ignored by .gitignore and WILL NEVER BE COMMITTED TO GIT.
+# ==============================================================================
+
+# Paste your actual local Google Gemini API key below:
+gemini.api.key=YOUR_ACTUAL_GEMINI_API_KEY_HERE
+
+# Override local database credentials if different from root/root:
+# spring.datasource.password=your_custom_mysql_password

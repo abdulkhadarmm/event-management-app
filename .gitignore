@@ -30,6 +30,10 @@ pnpm-debug.log*
 *.key
 *.crt
 
+# Local Spring Boot Secret Properties (Ignored by Git for Security)
+**/application-local.properties
+**/application-secrets.properties
+
 # IDE & Editor Files
 .idea/
 *.iml
