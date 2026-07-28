@@ -264,7 +264,7 @@ export const AdminDashboard = () => {
               title={<span style={{ fontWeight: '700', fontSize: '18px', color: '#111827' }}>Pipeline Breakdown</span>}
               style={{ borderRadius: '20px', border: '1px solid #E5E7EB', boxShadow: '0 4px 20px rgba(0,0,0,0.02)' }}
             >
-              <div style={{ height: 320 }}>
+              <div style={{ height: isMobile ? 380 : 320 }}>
                 {statusPieData.length > 0 ? (
                   <ResponsiveContainer width="100%" height="100%">
                     <PieChart>
@@ -273,9 +273,9 @@ export const AdminDashboard = () => {
                         dataKey="value"
                         nameKey="name"
                         cx="50%"
-                        cy="42%"
-                        innerRadius={55}
-                        outerRadius={82}
+                        cy={isMobile ? "35%" : "42%"}
+                        innerRadius={isMobile ? 42 : 55}
+                        outerRadius={isMobile ? 68 : 82}
                         paddingAngle={4}
                       >
                         {statusPieData.map((entry, index) => (
@@ -285,9 +285,9 @@ export const AdminDashboard = () => {
                       <Tooltip formatter={(value, name) => [`${value} enquiries`, name]} />
                       <Legend
                         verticalAlign="bottom"
-                        height={36}
+                        height={isMobile ? 80 : 36}
                         formatter={(value, entry) => (
-                          <span style={{ color: '#374151', fontWeight: '600', fontSize: '12px', marginRight: '8px' }}>
+                          <span style={{ color: '#374151', fontWeight: '600', fontSize: isMobile ? '11px' : '12px', marginRight: '6px' }}>
                             {value} ({entry.payload.value})
                           </span>
                         )}
