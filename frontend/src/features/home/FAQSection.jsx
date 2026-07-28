@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { designTokens } from '../../theme/designTokens';
+import { useResponsive } from '../../hooks/useResponsive';
 
 /**
  * FAQ Section matching the reference image layout:
  * Pill badge "Frequently Asked Questions", headline "Everything You Need to Know",
- * 2-column grid of rounded white accordion cards with subtle + / - expand toggles.
+ * Responsive grid of rounded white accordion cards with subtle + / - expand toggles.
  */
 export const FAQSection = () => {
   const [openKey, setOpenKey] = useState('1');
+  const { isMobile } = useResponsive();
 
   const faqs = [
     {
@@ -58,11 +60,11 @@ export const FAQSection = () => {
   };
 
   return (
-    <section style={{ padding: designTokens.spacing.sectionDesktop, background: designTokens.colors.bgAlt }}>
-      <div style={{ maxWidth: designTokens.spacing.containerMaxWidth, margin: '0 auto' }}>
+    <section style={{ padding: isMobile ? '40px 16px 60px 16px' : designTokens.spacing.sectionDesktop, background: designTokens.colors.bgAlt }}>
+      <div style={{ maxWidth: designTokens.spacing.containerMaxWidth, margin: '0 auto', width: '100%' }}>
         
         {/* Header */}
-        <div style={{ textAlign: 'center', maxWidth: '640px', margin: '0 auto 64px auto' }}>
+        <div style={{ textAlign: 'center', maxWidth: '640px', margin: '0 auto 40px auto' }}>
           <div
             style={{
               display: 'inline-flex',
@@ -82,7 +84,7 @@ export const FAQSection = () => {
           <h2
             style={{
               fontFamily: designTokens.typography.fontDisplay,
-              fontSize: designTokens.typography.sectionTitle,
+              fontSize: isMobile ? '24px' : designTokens.typography.sectionTitle,
               fontWeight: '800',
               color: designTokens.colors.textPrimary,
               lineHeight: '1.2',
@@ -93,18 +95,19 @@ export const FAQSection = () => {
             Everything You Need to Know
           </h2>
 
-          <p style={{ fontSize: designTokens.typography.bodyBase, color: designTokens.colors.textSecondary, lineHeight: '1.6' }}>
+          <p style={{ fontSize: isMobile ? '14px' : designTokens.typography.bodyBase, color: designTokens.colors.textSecondary, lineHeight: '1.6' }}>
             Quick answers to the most common questions about our AI-powered event management platform.
           </p>
         </div>
 
-        {/* 2-Column Accordion Grid */}
+        {/* 2-Column Responsive Accordion Grid */}
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(480px, 1fr))',
-            gap: '20px',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+            gap: '16px',
             alignItems: 'start',
+            width: '100%',
           }}
         >
           {faqs.map((faq) => {
@@ -118,16 +121,18 @@ export const FAQSection = () => {
                   background: designTokens.colors.surface,
                   borderRadius: '16px',
                   border: `1px solid ${designTokens.colors.border}`,
-                  padding: '24px',
+                  padding: isMobile ? '16px' : '24px',
                   cursor: 'pointer',
                   transition: 'all 0.2s ease-in-out',
                   boxShadow: isOpen ? designTokens.shadows.hover : designTokens.shadows.subtle,
+                  width: '100%',
+                  boxSizing: 'border-box',
                 }}
               >
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '16px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '12px' }}>
                   <h3
                     style={{
-                      fontSize: '16px',
+                      fontSize: isMobile ? '15px' : '16px',
                       fontWeight: '700',
                       color: designTokens.colors.textPrimary,
                       margin: 0,
@@ -159,11 +164,12 @@ export const FAQSection = () => {
                 {isOpen && (
                   <p
                     style={{
-                      marginTop: '16px',
+                      marginTop: '12px',
                       marginBottom: 0,
                       fontSize: '14px',
                       color: designTokens.colors.textSecondary,
-                      lineHeight: '1.65',
+                      lineHeight: '1.6',
+                      wordBreak: 'break-word',
                     }}
                   >
                     {faq.answer}
