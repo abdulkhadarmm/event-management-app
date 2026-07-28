@@ -25,7 +25,6 @@ Planning luxury weddings, corporate galas, milestone birthdays, and grand recept
 
 - 🌐 **Public Portal & Admin Interface**: [https://eventeasyofficial.vercel.app/](https://eventeasyofficial.vercel.app/)
 - ⚙️ **Backend REST Services**: Render Cloud Infrastructure (`/api/v1`)
-- 🔑 **Seeded Admin Credentials**: `admin@eventeasy.com` / `Admin@12345`
 
 ---
 
@@ -198,8 +197,8 @@ Update `backend/src/main/resources/application-dev.properties` if needed:
 
 ```properties
 spring.datasource.url=jdbc:mysql://localhost:3306/event_management_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&createDatabaseIfNotExist=true
-spring.datasource.username=root
-spring.datasource.password=root
+spring.datasource.username=YOUR_MYSQL_USERNAME
+spring.datasource.password=YOUR_MYSQL_PASSWORD
 ```
 
 ### 2. Launch Backend Server
@@ -222,11 +221,6 @@ npm run dev
 ```
 - **Public Web Application**: `http://localhost:5173`
 - **Admin Portal**: `http://localhost:5173/admin/login`
-
-### 4. Admin Credentials
-The database automatically seeds the initial administrator account on startup:
-- **Email**: `admin@eventeasy.com`
-- **Password**: `Admin@12345`
 
 ---
 
