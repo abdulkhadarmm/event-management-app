@@ -88,7 +88,7 @@ export const CommunitySection = () => {
                 justifyContent: 'space-between',
               }}
             >
-              <div>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <div
                   style={{
                     width: '56px',
@@ -98,7 +98,7 @@ export const CommunitySection = () => {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    marginBottom: '20px',
+                    margin: '0 auto 20px auto',
                   }}
                 >
                   {c.icon}
