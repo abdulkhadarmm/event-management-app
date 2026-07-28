@@ -217,22 +217,17 @@ export const AdminLayout = () => {
           {/* Brand Logo Header */}
           <div style={{ padding: '12px 12px 28px 12px', display: 'flex', alignItems: 'center', justifyContent: collapsed ? 'center' : 'flex-start' }}>
             {collapsed ? (
-              <div
+              <img
+                src="/favicon.svg"
+                alt="EventEasy"
                 style={{
                   width: '36px',
                   height: '36px',
-                  borderRadius: '10px',
-                  background: 'linear-gradient(135deg, #7C3AED 0%, #6366F1 100%)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: '#FFFFFF',
-                  fontWeight: '800',
-                  fontSize: '18px',
+                  objectFit: 'contain',
+                  cursor: 'pointer',
                 }}
-              >
-                E
-              </div>
+                onClick={() => navigate(ROUTES.HOME)}
+              />
             ) : (
               <Logo variant="dark" />
             )}
