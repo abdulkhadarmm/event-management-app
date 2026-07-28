@@ -7,8 +7,8 @@ import { designTokens } from '../../theme/designTokens';
 import { useResponsive } from '../../hooks/useResponsive';
 
 /**
- * Modern Full-Screen Hero Slider featuring responsive mobile typography,
- * crisp zero-text-shadow readability, luminous gradient backdrop, and bold pill CTAs.
+ * Modern Full-Screen Hero Slider featuring original clean typography overlay,
+ * zero card boxes, full-screen background video, and bold pill CTAs.
  */
 export const HeroSlider = () => {
   const [slideIndex, setSlideIndex] = useState(0);
@@ -116,8 +116,8 @@ export const HeroSlider = () => {
       style={{
         position: 'relative',
         width: '100%',
-        height: isMobile ? 'auto' : '100vh',
-        minHeight: isMobile ? '620px' : '680px',
+        height: '100vh',
+        minHeight: '680px',
         overflow: 'hidden',
         background: designTokens.colors.bg,
       }}
@@ -161,14 +161,13 @@ export const HeroSlider = () => {
               />
             </video>
 
-            {/* Luminous Soft Gradient Overlay guaranteeing 100% crystal clear legibility on Mobile & Desktop */}
+            {/* Luminous Soft Left Gradient Overlay guaranteeing 100% crystal clear legibility */}
             <div
               style={{
                 position: 'absolute',
                 inset: 0,
-                background: isMobile
-                  ? 'linear-gradient(to bottom, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.88) 75%, rgba(255, 255, 255, 0.65) 100%)'
-                  : 'linear-gradient(to right, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.85) 45%, rgba(255, 255, 255, 0.3) 75%, transparent 100%)',
+                background:
+                  'linear-gradient(to right, rgba(255, 255, 255, 0.94) 0%, rgba(255, 255, 255, 0.85) 45%, rgba(255, 255, 255, 0.3) 75%, transparent 100%)',
               }}
             />
 
@@ -196,13 +195,13 @@ export const HeroSlider = () => {
           height: '100%',
           maxWidth: designTokens.spacing.containerMaxWidth,
           margin: '0 auto',
-          padding: isMobile ? '100px 20px 60px 20px' : '0 24px',
+          padding: '0 24px',
           display: 'flex',
           alignItems: 'center',
         }}
       >
         {/* Unique key forces clean React state reset per slide */}
-        <div key={`slide-content-${slideIndex}`} style={{ maxWidth: '680px', paddingTop: isMobile ? '20px' : '96px', width: '100%' }}>
+        <div key={`slide-content-${slideIndex}`} style={{ maxWidth: '680px', paddingTop: '96px', width: '100%' }}>
           
           {/* 1. Unadorned Editorial Category Label (delay: 0ms) */}
           <div style={getElementStyle(0)}>
@@ -211,17 +210,17 @@ export const HeroSlider = () => {
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '8px',
-                marginBottom: isMobile ? '12px' : '18px',
+                marginBottom: '18px',
               }}
             >
               <StarOutlined style={{ color: '#4F46E5', fontSize: '12px' }} />
               <span
                 style={{
-                  fontSize: isMobile ? '11px' : '12px',
+                  fontSize: '12px',
                   fontWeight: '800',
                   color: '#4F46E5',
                   textTransform: 'uppercase',
-                  letterSpacing: isMobile ? '2px' : '3.5px',
+                  letterSpacing: '3.5px',
                   fontFamily: designTokens.typography.fontBody,
                 }}
               >
@@ -235,12 +234,12 @@ export const HeroSlider = () => {
             <h1
               style={{
                 fontFamily: designTokens.typography.fontDisplay,
-                fontSize: 'clamp(2rem, 7.5vw, 4.5rem)',
+                fontSize: 'clamp(2.2rem, 5.5vw, 4.5rem)',
                 fontWeight: '800',
-                lineHeight: '1.12',
-                marginBottom: '4px',
+                lineHeight: '1.08',
+                marginBottom: '6px',
                 color: '#0F172A',
-                letterSpacing: '-0.5px',
+                letterSpacing: '-1px',
                 textShadow: 'none',
               }}
             >
@@ -253,13 +252,13 @@ export const HeroSlider = () => {
             <span
               style={{
                 fontFamily: designTokens.typography.fontDisplay,
-                fontSize: 'clamp(2rem, 7.5vw, 4.5rem)',
+                fontSize: 'clamp(2.2rem, 5.5vw, 4.5rem)',
                 fontWeight: '800',
-                lineHeight: '1.12',
-                marginBottom: isMobile ? '16px' : '28px',
+                lineHeight: '1.08',
+                marginBottom: '28px',
                 display: 'block',
                 color: '#4F46E5',
-                letterSpacing: '-0.5px',
+                letterSpacing: '-1px',
                 textShadow: 'none',
               }}
             >
@@ -275,8 +274,8 @@ export const HeroSlider = () => {
                 fontWeight: '500',
                 color: '#334155',
                 fontFamily: designTokens.typography.fontBody,
-                lineHeight: '1.6',
-                marginBottom: isMobile ? '28px' : '40px',
+                lineHeight: '1.65',
+                marginBottom: '40px',
                 maxWidth: '560px',
                 textShadow: 'none',
               }}
@@ -289,9 +288,9 @@ export const HeroSlider = () => {
           <div
             style={{
               display: 'flex',
-              flexDirection: isMobile ? 'column' : 'row',
-              gap: '12px',
-              alignItems: isMobile ? 'stretch' : 'center',
+              flexWrap: 'wrap',
+              gap: '16px',
+              alignItems: 'center',
             }}
           >
             {/* 5. Primary Pill Button (delay: 340ms) */}
@@ -299,15 +298,14 @@ export const HeroSlider = () => {
               <Button
                 type="primary"
                 size="large"
-                block={isMobile}
                 icon={<ArrowRightOutlined />}
                 iconPosition="end"
                 onClick={() => navigate(slide.primaryCtaLink)}
                 style={{
-                  height: isMobile ? '48px' : '54px',
-                  padding: isMobile ? '0 24px' : '0 38px',
+                  height: '54px',
+                  padding: '0 38px',
                   borderRadius: designTokens.radii.pill,
-                  fontSize: isMobile ? '15px' : '16px',
+                  fontSize: '16px',
                   fontWeight: '700',
                   background: '#0F172A',
                   color: '#FFFFFF',
@@ -323,13 +321,12 @@ export const HeroSlider = () => {
             <div style={getElementStyle(420)}>
               <Button
                 size="large"
-                block={isMobile}
                 onClick={() => navigate(slide.secondaryCtaLink)}
                 style={{
-                  height: isMobile ? '48px' : '54px',
-                  padding: isMobile ? '0 24px' : '0 34px',
+                  height: '54px',
+                  padding: '0 34px',
                   borderRadius: designTokens.radii.pill,
-                  fontSize: isMobile ? '15px' : '16px',
+                  fontSize: '16px',
                   fontWeight: '700',
                   color: '#0F172A',
                   background: '#FFFFFF',

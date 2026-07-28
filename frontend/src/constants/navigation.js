@@ -5,13 +5,12 @@ import { ROUTES } from './routes';
  */
 export const NAV_ITEMS = [
   { label: 'Home', path: ROUTES.HOME },
-  { label: 'AI Event Planner', path: ROUTES.AI_PLANNER, badge: 'AI' },
+  { label: 'AI Planner', path: ROUTES.AI_PLANNER, badge: 'AI' },
   { label: 'About Us', path: ROUTES.ABOUT },
   { label: 'Services', path: ROUTES.SERVICES },
   { label: 'Packages', path: ROUTES.PACKAGES },
   { label: 'Themes', path: ROUTES.THEMES },
   { label: 'Gallery', path: ROUTES.GALLERY },
-  { label: 'Contact', path: ROUTES.CONTACT },
 ];
 
 /**

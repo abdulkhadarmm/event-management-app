@@ -13,12 +13,13 @@ import { designTokens } from '../../../theme/designTokens';
 /**
  * Luxury Navigation Header component.
  * Transparent over Homepage Hero Slider, transitioning smoothly to frosted white background on subpages and scroll.
+ * Uses responsive hamburger menu for mobile and tablet screens (< 1200px) to prevent header overflow.
  */
 export const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
   const { toggleMobileMenu } = useUIStore();
-  const { isMobile } = useResponsive();
+  const { showMobileMenu } = useResponsive();
 
   const isHomePage = location.pathname === '/';
   const isFrosted = scrolled || !isHomePage;
@@ -62,14 +63,14 @@ export const Navbar = () => {
       >
         <Logo variant="dark" />
 
-        {!isMobile && (
+        {!showMobileMenu && (
           <>
             <NavigationMenu scrolled={isFrosted} />
             <UserMenu />
           </>
         )}
 
-        {isMobile && (
+        {showMobileMenu && (
           <Button
             type="text"
             icon={<MenuOutlined style={{ color: designTokens.colors.textPrimary, fontSize: '22px' }} />}

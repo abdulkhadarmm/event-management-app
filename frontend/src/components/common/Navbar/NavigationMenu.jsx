@@ -6,10 +6,11 @@ import { StarOutlined } from '@ant-design/icons';
 
 /**
  * NavigationMenu component rendering crisp, prominent header menu links with AI badge support.
+ * Enforces single-line white-space formatting to prevent multi-line text wrapping on tablet/desktop viewports.
  */
 export const NavigationMenu = () => {
   return (
-    <nav style={{ display: 'flex', alignItems: 'center', gap: '28px' }}>
+    <nav style={{ display: 'flex', alignItems: 'center', gap: '20px', flexWrap: 'nowrap' }}>
       {NAV_ITEMS.map((item) => (
         <NavLink
           key={item.path}
@@ -27,6 +28,7 @@ export const NavigationMenu = () => {
             display: 'inline-flex',
             alignItems: 'center',
             gap: '6px',
+            whiteSpace: 'nowrap',
           })}
         >
           {item.label}
@@ -44,6 +46,7 @@ export const NavigationMenu = () => {
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '3px',
+                whiteSpace: 'nowrap',
               }}
             >
               <StarOutlined style={{ fontSize: '9px' }} /> {item.badge}
