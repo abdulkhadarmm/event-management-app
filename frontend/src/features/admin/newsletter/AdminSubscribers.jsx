@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Card, Table, Tag, Input, Button, Statistic, Row, Col, Space, notification } from 'antd';
+import { Card, Table, Tag, Input, Button, Statistic, Row, Col, notification } from 'antd';
 import {
   MailOutlined,
   SearchOutlined,
-  CopyOutlined,
   ReloadOutlined,
   UsergroupAddOutlined,
   CheckCircleOutlined,
@@ -12,13 +11,15 @@ import {
 import { useQuery } from '@tanstack/react-query';
 import { adminNewsletterService } from '../../../services/adminNewsletterService';
 import { formatDate } from '../../../utils/formatters';
+import { useResponsive } from '../../../hooks/useResponsive';
 
 /**
  * Admin Subscribers Management Page:
- * Displays real-time database newsletter subscriber list with search, stats, and copy email list functionality.
+ * Displays real-time database newsletter subscriber list with search and stats.
  */
 export const AdminSubscribers = () => {
   const [searchText, setSearchText] = useState('');
+  const { isMobile } = useResponsive();
 
   const { data: subscribers = [], isLoading, refetch } = useQuery({
     queryKey: ['adminNewsletterSubscribers'],
@@ -28,16 +29,6 @@ export const AdminSubscribers = () => {
   const filteredSubscribers = subscribers.filter((sub) =>
     (sub.email || '').toLowerCase().includes(searchText.toLowerCase())
   );
-
-  const handleCopyEmails = () => {
-    if (subscribers.length === 0) return;
-    const emailList = subscribers.map((s) => s.email).join(', ');
-    navigator.clipboard.writeText(emailList);
-    notification.success({
-      message: 'Emails Copied',
-      description: `${subscribers.length} email addresses copied to clipboard!`,
-    });
-  };
 
   const columns = [
     {
@@ -84,33 +75,30 @@ export const AdminSubscribers = () => {
 
       <div style={{ padding: '8px 0' }}>
         {/* Page Header */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px', marginBottom: '24px' }}>
+        <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: isMobile ? 'flex-start' : 'center', justifyContent: 'space-between', gap: '16px', marginBottom: '24px' }}>
           <div>
-            <h1 style={{ fontSize: '26px', fontWeight: '900', color: '#0F172A', margin: 0 }}>
+            <h1 style={{ fontSize: isMobile ? '24px' : '26px', fontWeight: '900', color: '#0F172A', margin: 0 }}>
               Newsletter Subscribers
             </h1>
-            <p style={{ color: '#64748B', fontSize: '14px', margin: '4px 0 0 0' }}>
+            <p style={{ color: '#64748B', fontSize: isMobile ? '13px' : '14px', margin: '4px 0 0 0' }}>
               Manage website email subscribers received from public newsletter signups.
             </p>
           </div>
 
-          <Space>
-            <Button
-              icon={<ReloadOutlined />}
-              onClick={() => refetch()}
-              style={{ borderRadius: '20px' }}
-            >
-              Refresh
-            </Button>
-            <Button
-              type="primary"
-              icon={<CopyOutlined />}
-              onClick={handleCopyEmails}
-              style={{ borderRadius: '20px', background: 'linear-gradient(135deg, #7C3AED 0%, #6366F1 100%)', border: 'none' }}
-            >
-              Copy All Emails
-            </Button>
-          </Space>
+          <Button
+            icon={<ReloadOutlined />}
+            onClick={() => refetch()}
+            style={{
+              borderRadius: '24px',
+              height: isMobile ? '36px' : '40px',
+              padding: isMobile ? '0 14px' : '0 18px',
+              fontSize: isMobile ? '13px' : '14px',
+              fontWeight: '600',
+              borderColor: '#E5E7EB',
+            }}
+          >
+            Refresh
+          </Button>
         </div>
 
         {/* Statistic Cards */}
@@ -157,6 +145,7 @@ export const AdminSubscribers = () => {
             dataSource={filteredSubscribers}
             rowKey="id"
             loading={isLoading}
+            scroll={{ x: 'max-content' }}
             pagination={{ pageSize: 10, showSizeChanger: true }}
           />
         </Card>

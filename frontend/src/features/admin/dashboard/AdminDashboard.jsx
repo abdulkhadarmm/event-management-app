@@ -31,6 +31,7 @@ import {
 import { useAuth } from '../../../hooks/useAuth';
 import { dashboardService } from '../../../services/dashboardService';
 import { formatDate } from '../../../utils/formatters';
+import { useResponsive } from '../../../hooks/useResponsive';
 
 const PIE_COLORS = ['#7C3AED', '#06B6D4', '#3B82F6', '#F59E0B', '#10B981', '#EC4899', '#EF4444'];
 
@@ -41,6 +42,7 @@ const PIE_COLORS = ['#7C3AED', '#06B6D4', '#3B82F6', '#F59E0B', '#10B981', '#EC4
 export const AdminDashboard = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
+  const { isMobile } = useResponsive();
 
   const { data: stats, isLoading, isError, refetch } = useQuery({
     queryKey: ['adminDashboardStats'],
@@ -48,7 +50,9 @@ export const AdminDashboard = () => {
   });
 
   const statusPieData = stats?.statusDistribution
-    ? Object.entries(stats.statusDistribution).map(([name, value]) => ({ name, value }))
+    ? Object.entries(stats.statusDistribution)
+        .filter(([_, value]) => value > 0)
+        .map(([name, value]) => ({ name, value }))
     : [];
 
   const eventTypeBarData = stats?.eventTypeDistribution
@@ -111,19 +115,35 @@ export const AdminDashboard = () => {
 
       <div>
         {/* Page Title & Refresh Header */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '28px' }}>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: isMobile ? 'column' : 'row',
+            alignItems: isMobile ? 'flex-start' : 'center',
+            justifyContent: 'space-between',
+            gap: '16px',
+            marginBottom: '24px',
+          }}
+        >
           <div>
-            <h1 style={{ fontSize: '32px', fontWeight: '800', color: '#111827', margin: 0, letterSpacing: '-0.5px' }}>
+            <h1 style={{ fontSize: isMobile ? '24px' : '32px', fontWeight: '800', color: '#111827', margin: 0, letterSpacing: '-0.5px' }}>
               Analytics
             </h1>
-            <p style={{ color: '#6B7280', fontSize: '14px', margin: '4px 0 0 0' }}>
+            <p style={{ color: '#6B7280', fontSize: isMobile ? '13px' : '14px', margin: '4px 0 0 0' }}>
               Real-time event performance, enquiry pipelines, and engagement metrics.
             </p>
           </div>
           <Button
             icon={<ReloadOutlined />}
             onClick={() => refetch()}
-            style={{ borderRadius: '20px', fontWeight: '600', borderColor: '#E5E7EB', padding: '0 20px', height: '40px' }}
+            style={{
+              borderRadius: '24px',
+              height: isMobile ? '36px' : '40px',
+              padding: isMobile ? '0 14px' : '0 18px',
+              fontSize: isMobile ? '13px' : '14px',
+              fontWeight: '600',
+              borderColor: '#E5E7EB',
+            }}
           >
             Refresh
           </Button>
@@ -244,7 +264,7 @@ export const AdminDashboard = () => {
               title={<span style={{ fontWeight: '700', fontSize: '18px', color: '#111827' }}>Pipeline Breakdown</span>}
               style={{ borderRadius: '20px', border: '1px solid #E5E7EB', boxShadow: '0 4px 20px rgba(0,0,0,0.02)' }}
             >
-              <div style={{ height: 300 }}>
+              <div style={{ height: 320 }}>
                 {statusPieData.length > 0 ? (
                   <ResponsiveContainer width="100%" height="100%">
                     <PieChart>
@@ -253,17 +273,25 @@ export const AdminDashboard = () => {
                         dataKey="value"
                         nameKey="name"
                         cx="50%"
-                        cy="50%"
-                        innerRadius={65}
-                        outerRadius={95}
-                        paddingAngle={5}
+                        cy="42%"
+                        innerRadius={55}
+                        outerRadius={82}
+                        paddingAngle={4}
                       >
                         {statusPieData.map((entry, index) => (
                           <Cell key={`cell-${index}`} fill={PIE_COLORS[index % PIE_COLORS.length]} />
                         ))}
                       </Pie>
-                      <Tooltip />
-                      <Legend />
+                      <Tooltip formatter={(value, name) => [`${value} enquiries`, name]} />
+                      <Legend
+                        verticalAlign="bottom"
+                        height={36}
+                        formatter={(value, entry) => (
+                          <span style={{ color: '#374151', fontWeight: '600', fontSize: '12px', marginRight: '8px' }}>
+                            {value} ({entry.payload.value})
+                          </span>
+                        )}
+                      />
                     </PieChart>
                   </ResponsiveContainer>
                 ) : (
@@ -279,7 +307,7 @@ export const AdminDashboard = () => {
               title={<span style={{ fontWeight: '700', fontSize: '18px', color: '#111827' }}>Category Performance</span>}
               style={{ borderRadius: '20px', border: '1px solid #E5E7EB', boxShadow: '0 4px 20px rgba(0,0,0,0.02)' }}
             >
-              <div style={{ height: 300 }}>
+              <div style={{ height: 320 }}>
                 {eventTypeBarData.length > 0 ? (
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={eventTypeBarData}>
@@ -347,6 +375,7 @@ export const AdminDashboard = () => {
               dataSource={stats?.recentEnquiries || []}
               rowKey="id"
               pagination={false}
+              scroll={{ x: 'max-content' }}
             />
           </Card>
         </div>

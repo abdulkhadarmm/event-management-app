@@ -6,6 +6,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { packageService } from '../../../services/packageService';
 import { formatCurrency } from '../../../utils/formatters';
+import { useResponsive } from '../../../hooks/useResponsive';
 
 const { TextArea } = Input;
 
@@ -14,6 +15,7 @@ export const AdminPackages = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingItem, setEditingItem] = useState(null);
   const [form] = Form.useForm();
+  const { isMobile } = useResponsive();
 
   const { data: packages, isLoading, refetch } = useQuery({
     queryKey: ['adminPackages'],
@@ -95,18 +97,49 @@ export const AdminPackages = () => {
       <Helmet><title>Event Packages Management | EventEasy</title></Helmet>
 
       <div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '28px' }}>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: isMobile ? 'column' : 'row',
+            alignItems: isMobile ? 'flex-start' : 'center',
+            justifyContent: 'space-between',
+            gap: '16px',
+            marginBottom: '24px',
+          }}
+        >
           <div>
-            <h1 style={{ fontSize: '32px', fontWeight: '800', color: '#111827', margin: 0, letterSpacing: '-0.5px' }}>Pricing Packages</h1>
-            <p style={{ color: '#6B7280', fontSize: '14px', margin: '4px 0 0 0' }}>Manage curated service tiers and features in Indian Rupees (₹).</p>
+            <h1 style={{ fontSize: isMobile ? '24px' : '32px', fontWeight: '800', color: '#111827', margin: 0, letterSpacing: '-0.5px' }}>Pricing Packages</h1>
+            <p style={{ color: '#6B7280', fontSize: isMobile ? '13px' : '14px', margin: '4px 0 0 0' }}>Manage curated service tiers and features in Indian Rupees (₹).</p>
           </div>
-          <Space>
-            <Button icon={<ReloadOutlined />} onClick={() => refetch()} style={{ borderRadius: '20px', height: '40px' }}>Refresh</Button>
+          <Space wrap style={{ width: isMobile ? '100%' : 'auto', justifyContent: isMobile ? 'flex-start' : 'flex-end', gap: '8px' }}>
+            <Button
+              icon={<ReloadOutlined />}
+              onClick={() => refetch()}
+              style={{
+                borderRadius: '24px',
+                height: isMobile ? '36px' : '40px',
+                padding: isMobile ? '0 12px' : '0 18px',
+                fontSize: isMobile ? '13px' : '14px',
+                fontWeight: '600',
+                borderColor: '#E5E7EB',
+              }}
+            >
+              Refresh
+            </Button>
             <Button
               type="primary"
               icon={<PlusOutlined />}
               onClick={() => handleOpenModal()}
-              style={{ background: 'linear-gradient(135deg, #7C3AED 0%, #6366F1 100%)', borderRadius: '30px', height: '40px', fontWeight: '600' }}
+              style={{
+                background: 'linear-gradient(135deg, #7C3AED 0%, #6366F1 100%)',
+                borderRadius: '24px',
+                height: isMobile ? '36px' : '40px',
+                padding: isMobile ? '0 16px' : '0 22px',
+                fontSize: isMobile ? '13px' : '14px',
+                fontWeight: '600',
+                border: 'none',
+                boxShadow: '0 4px 12px rgba(124, 58, 237, 0.25)',
+              }}
             >
               Add Package
             </Button>
@@ -114,7 +147,7 @@ export const AdminPackages = () => {
         </div>
 
         <Card style={{ borderRadius: '20px', border: '1px solid #E5E7EB', boxShadow: '0 4px 20px rgba(0,0,0,0.02)' }}>
-          <Table columns={columns} dataSource={packages || []} rowKey="id" loading={isLoading} />
+          <Table columns={columns} dataSource={packages || []} rowKey="id" loading={isLoading} scroll={{ x: 'max-content' }} />
         </Card>
 
         <Modal
@@ -133,7 +166,7 @@ export const AdminPackages = () => {
               <Input placeholder="e.g. Designed for grand weddings & corporate galas" />
             </Form.Item>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '16px' }}>
               <Form.Item name="price" label="Base Price (₹)" rules={[{ required: true, message: 'Please enter price' }]}>
                 <InputNumber min={0} style={{ width: '100%' }} placeholder="e.g. 450000" />
               </Form.Item>
@@ -143,7 +176,7 @@ export const AdminPackages = () => {
               </Form.Item>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '16px' }}>
               <Form.Item name="popularFlag" label="Highlight Most Popular" valuePropName="checked">
                 <Switch />
               </Form.Item>
@@ -163,12 +196,21 @@ export const AdminPackages = () => {
               {(fields, { add, remove }) => (
                 <>
                   {fields.map(({ key, name, ...restField }) => (
-                    <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
+                    <div
+                      key={key}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '8px',
+                        marginBottom: '10px',
+                        width: '100%',
+                      }}
+                    >
                       <Form.Item
                         {...restField}
                         name={[name, 'featureName']}
                         rules={[{ required: true, message: 'Feature name required' }]}
-                        style={{ width: 340, marginBottom: 0 }}
+                        style={{ flex: 1, minWidth: 0, marginBottom: 0 }}
                       >
                         <Input placeholder="e.g. Up to 300 Guests" />
                       </Form.Item>
@@ -176,21 +218,21 @@ export const AdminPackages = () => {
                         {...restField}
                         name={[name, 'displayOrder']}
                         initialValue={name + 1}
-                        style={{ width: 80, marginBottom: 0 }}
+                        style={{ width: '60px', marginBottom: 0, flexShrink: 0 }}
                       >
-                        <InputNumber min={0} placeholder="Order" />
+                        <InputNumber min={0} placeholder="Ord" style={{ width: '100%' }} />
                       </Form.Item>
                       <Form.Item
                         {...restField}
                         name={[name, 'activeStatus']}
                         initialValue={true}
                         valuePropName="checked"
-                        style={{ marginBottom: 0 }}
+                        style={{ marginBottom: 0, flexShrink: 0 }}
                       >
-                        <Switch />
+                        <Switch size="small" />
                       </Form.Item>
-                      <MinusCircleOutlined onClick={() => remove(name)} style={{ color: '#EF4444' }} />
-                    </Space>
+                      <MinusCircleOutlined onClick={() => remove(name)} style={{ color: '#EF4444', flexShrink: 0, cursor: 'pointer', fontSize: '16px' }} />
+                    </div>
                   ))}
                   <Form.Item>
                     <Button type="dashed" onClick={() => add({ displayOrder: fields.length + 1, activeStatus: true })} block icon={<PlusOutlined />}>

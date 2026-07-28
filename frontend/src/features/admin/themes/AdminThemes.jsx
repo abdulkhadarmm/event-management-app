@@ -5,6 +5,7 @@ import { PlusOutlined, EditOutlined, DeleteOutlined, ReloadOutlined } from '@ant
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { themeService } from '../../../services/themeService';
+import { useResponsive } from '../../../hooks/useResponsive';
 
 const { TextArea } = Input;
 
@@ -29,6 +30,7 @@ export const AdminThemes = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingItem, setEditingItem] = useState(null);
   const [form] = Form.useForm();
+  const { isMobile } = useResponsive();
 
   const { data: themes, isLoading, refetch } = useQuery({
     queryKey: ['adminThemes'],
@@ -161,18 +163,49 @@ export const AdminThemes = () => {
       <Helmet><title>Event Themes Management | EventEasy</title></Helmet>
 
       <div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '28px' }}>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: isMobile ? 'column' : 'row',
+            alignItems: isMobile ? 'flex-start' : 'center',
+            justifyContent: 'space-between',
+            gap: '16px',
+            marginBottom: '24px',
+          }}
+        >
           <div>
-            <h1 style={{ fontSize: '32px', fontWeight: '800', color: '#111827', margin: 0, letterSpacing: '-0.5px' }}>Design Themes</h1>
-            <p style={{ color: '#6B7280', fontSize: '14px', margin: '4px 0 0 0' }}>Manage signature visual design themes and color palettes.</p>
+            <h1 style={{ fontSize: isMobile ? '24px' : '32px', fontWeight: '800', color: '#111827', margin: 0, letterSpacing: '-0.5px' }}>Design Themes</h1>
+            <p style={{ color: '#6B7280', fontSize: isMobile ? '13px' : '14px', margin: '4px 0 0 0' }}>Manage signature visual design themes and color palettes.</p>
           </div>
-          <Space>
-            <Button icon={<ReloadOutlined />} onClick={() => refetch()} style={{ borderRadius: '20px', height: '40px' }}>Refresh</Button>
+          <Space wrap style={{ width: isMobile ? '100%' : 'auto', justifyContent: isMobile ? 'flex-start' : 'flex-end', gap: '8px' }}>
+            <Button
+              icon={<ReloadOutlined />}
+              onClick={() => refetch()}
+              style={{
+                borderRadius: '24px',
+                height: isMobile ? '36px' : '40px',
+                padding: isMobile ? '0 12px' : '0 18px',
+                fontSize: isMobile ? '13px' : '14px',
+                fontWeight: '600',
+                borderColor: '#E5E7EB',
+              }}
+            >
+              Refresh
+            </Button>
             <Button
               type="primary"
               icon={<PlusOutlined />}
               onClick={() => handleOpenModal()}
-              style={{ background: 'linear-gradient(135deg, #7C3AED 0%, #6366F1 100%)', borderRadius: '30px', height: '40px', fontWeight: '600' }}
+              style={{
+                background: 'linear-gradient(135deg, #7C3AED 0%, #6366F1 100%)',
+                borderRadius: '24px',
+                height: isMobile ? '36px' : '40px',
+                padding: isMobile ? '0 16px' : '0 22px',
+                fontSize: isMobile ? '13px' : '14px',
+                fontWeight: '600',
+                border: 'none',
+                boxShadow: '0 4px 12px rgba(124, 58, 237, 0.25)',
+              }}
             >
               Add Theme
             </Button>
@@ -180,7 +213,7 @@ export const AdminThemes = () => {
         </div>
 
         <Card style={{ borderRadius: '20px', border: '1px solid #E5E7EB', boxShadow: '0 4px 20px rgba(0,0,0,0.02)' }}>
-          <Table columns={columns} dataSource={themes || []} rowKey="id" loading={isLoading} />
+          <Table columns={columns} dataSource={themes || []} rowKey="id" loading={isLoading} scroll={{ x: 'max-content' }} />
         </Card>
 
         <Modal

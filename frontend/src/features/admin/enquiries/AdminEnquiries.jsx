@@ -20,6 +20,7 @@ import { packageService } from '../../../services/packageService';
 import { themeService } from '../../../services/themeService';
 import { aiService } from '../../../services/aiService';
 import { formatDate, formatCurrency } from '../../../utils/formatters';
+import { useResponsive } from '../../../hooks/useResponsive';
 
 const { Option } = Select;
 const { RangePicker } = DatePicker;
@@ -27,6 +28,7 @@ const { TextArea } = Input;
 
 export const AdminEnquiries = () => {
   const queryClient = useQueryClient();
+  const { isMobile } = useResponsive();
 
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState(null);
@@ -238,19 +240,35 @@ export const AdminEnquiries = () => {
       </Helmet>
 
       <div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '28px' }}>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: isMobile ? 'column' : 'row',
+            alignItems: isMobile ? 'flex-start' : 'center',
+            justifyContent: 'space-between',
+            gap: '16px',
+            marginBottom: '24px',
+          }}
+        >
           <div>
-            <h1 style={{ fontSize: '32px', fontWeight: '800', color: '#111827', margin: 0, letterSpacing: '-0.5px' }}>
+            <h1 style={{ fontSize: isMobile ? '24px' : '32px', fontWeight: '800', color: '#111827', margin: 0, letterSpacing: '-0.5px' }}>
               Customer Enquiries
             </h1>
-            <p style={{ color: '#6B7280', fontSize: '14px', margin: '4px 0 0 0' }}>
+            <p style={{ color: '#6B7280', fontSize: isMobile ? '13px' : '14px', margin: '4px 0 0 0' }}>
               Search, filter, review AI Event Plans, and manage client booking requests.
             </p>
           </div>
           <Button
             icon={<ReloadOutlined />}
             onClick={() => refetch()}
-            style={{ borderRadius: '20px', fontWeight: '600', borderColor: '#E5E7EB', height: '40px' }}
+            style={{
+              borderRadius: '24px',
+              height: isMobile ? '36px' : '40px',
+              padding: isMobile ? '0 14px' : '0 18px',
+              fontSize: isMobile ? '13px' : '14px',
+              fontWeight: '600',
+              borderColor: '#E5E7EB',
+            }}
           >
             Refresh List
           </Button>
@@ -325,6 +343,7 @@ export const AdminEnquiries = () => {
             dataSource={pagedData?.content || []}
             rowKey="id"
             loading={isLoading}
+            scroll={{ x: 'max-content' }}
             pagination={{
               current: (pagedData?.page || 0) + 1,
               pageSize: pagedData?.size || 10,
