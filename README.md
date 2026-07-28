@@ -246,6 +246,4 @@ npm run dev
 
 ---
 
-## 📜 License & Copyright
 
-Designed and engineered for **EventEasy Architecture & Platform**. All rights reserved.
