@@ -174,7 +174,11 @@ public class BusinessDataInitializer implements CommandLineRunner {
     }
 
     private List<EventPackage> initializePackages() {
-        packageRepository.deleteAll();
+        if (packageRepository.count() > 0) {
+            log.info("Event packages already populated.");
+            return packageRepository.findAll();
+        }
+
         log.info("Seeding default Event Packages with Inclusion Features in ₹ INR...");
         List<EventPackage> packages = new ArrayList<>();
 
@@ -249,7 +253,11 @@ public class BusinessDataInitializer implements CommandLineRunner {
     }
 
     private List<EventTheme> initializeThemes() {
-        themeRepository.deleteAll();
+        if (themeRepository.count() > 0) {
+            log.info("Design themes already populated.");
+            return themeRepository.findAll();
+        }
+
         log.info("Seeding default Design Themes with Multi-Color Palettes...");
         List<EventTheme> themes = new ArrayList<>();
         themes.add(themeRepository.save(EventTheme.builder().name("Royal Gold & Crimson").category("Traditional").accentColor("#D97706,#DC2626,#F59E0B,#78350F").description("Rich golden drapes, crimson roses, brass lamps, and majestic mandap architecture.").imagePath("https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80").displayOrder(1).activeStatus(true).build()));
