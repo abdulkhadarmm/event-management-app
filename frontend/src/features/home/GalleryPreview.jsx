@@ -11,7 +11,7 @@ import { designTokens } from '../../theme/designTokens';
  * Modern High-Impact Indian Event Portfolio Gallery Component:
  * - Fetches data dynamically ONLY from backend (galleryService.getPublicActiveGalleryItems)
  * - Shows Spin loader during fetch
- * - Shows clear error message if backend is unreachable
+ * - Shows simple clean red error text matching other pages if backend connection fails
  */
 export const GalleryPreview = () => {
   const navigate = useNavigate();
@@ -52,11 +52,10 @@ export const GalleryPreview = () => {
         </div>
 
         {isLoading ? (
-          <div style={{ textAlign: 'center', padding: '64px' }}><Spin size="large" /></div>
+          <div style={{ textAlign: 'center', padding: '48px' }}><Spin size="large" /></div>
         ) : error ? (
-          <div style={{ textAlign: 'center', padding: '48px 24px', background: '#FEF2F2', borderRadius: '16px', border: '1px solid #FCA5A5', color: '#991B1B', maxWidth: '600px', margin: '0 auto' }}>
-            <h4 style={{ fontSize: '16px', fontWeight: '700', marginBottom: '6px' }}>Unable to load celebrations</h4>
-            <p style={{ fontSize: '14px', margin: 0 }}>Please ensure the backend server is running at <strong>http://localhost:8080</strong>.</p>
+          <div style={{ textAlign: 'center', color: designTokens.colors.error }}>
+            Unable to load celebrations dynamically. Please check backend connection.
           </div>
         ) : !celebrations || celebrations.length === 0 ? (
           <div style={{ textAlign: 'center', padding: '48px 24px', color: designTokens.colors.textSecondary }}>
