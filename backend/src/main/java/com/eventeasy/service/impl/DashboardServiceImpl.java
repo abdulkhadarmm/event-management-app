@@ -61,8 +61,8 @@ public class DashboardServiceImpl implements DashboardService {
                 + enquiryRepository.countByStatusAndDeletedFalse(EnquiryStatus.QUOTATION_SENT)
                 + enquiryRepository.countByStatusAndDeletedFalse(EnquiryStatus.NEGOTIATION);
 
-        long upcoming = enquiryRepository.countByEventDateGreaterThanEqualAndStatusAndDeletedFalse(
-                LocalDate.now(), EnquiryStatus.CONFIRMED
+        long upcoming = enquiryRepository.countByEventDateGreaterThanEqualAndStatusNotAndDeletedFalse(
+                LocalDate.now(), EnquiryStatus.CANCELLED
         );
 
         // Status Distribution for Recharts Pie Chart
