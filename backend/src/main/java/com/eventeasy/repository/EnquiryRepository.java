@@ -108,10 +108,11 @@ public interface EnquiryRepository extends JpaRepository<Enquiry, UUID>, JpaSpec
     long countByEventDateGreaterThanEqualAndStatusNotInAndDeletedFalse(LocalDate today, java.util.Collection<EnquiryStatus> excludedStatuses);
 
     /**
-     * Retrieve top 5 recent non-deleted enquiries ordered by creation date descending.
+     * Retrieve top 5 recent non-deleted enquiries with eagerly fetched relationships.
      *
      * @return List of 5 latest Enquiry entities
      */
+    @org.springframework.data.jpa.repository.EntityGraph(attributePaths = {"eventType", "eventPackage", "eventTheme"})
     List<Enquiry> findTop5ByDeletedFalseOrderByCreatedAtDesc();
 
     /**
