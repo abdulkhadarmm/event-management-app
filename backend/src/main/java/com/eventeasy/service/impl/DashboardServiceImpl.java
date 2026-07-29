@@ -36,7 +36,7 @@ public class DashboardServiceImpl implements DashboardService {
 
     private volatile DashboardStatsResponse cachedResponse;
     private volatile long lastCacheTime = 0;
-    private static final long CACHE_TTL_MS = 5000; // 5 seconds in-memory cache for ultra-fast refreshes
+    private static final long CACHE_TTL_MS = 60000; // 60 seconds in-memory cache for ultra-fast dashboard response
 
     public DashboardServiceImpl(EnquiryRepository enquiryRepository) {
         this.enquiryRepository = enquiryRepository;
