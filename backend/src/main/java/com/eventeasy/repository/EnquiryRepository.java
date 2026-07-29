@@ -138,4 +138,13 @@ public interface EnquiryRepository extends JpaRepository<Enquiry, UUID>, JpaSpec
      */
     @Query("SELECT e.eventType.name, COUNT(e) FROM Enquiry e WHERE e.deleted = false GROUP BY e.eventType.name")
     List<Object[]> countEnquiriesGroupedByEventType();
+
+    /**
+     * Aggregate query retrieving count of enquiries grouped by year and month since start date.
+     *
+     * @param startDate start timestamp
+     * @return List of Object arrays [year Integer, month Integer, Count Long]
+     */
+    @Query("SELECT YEAR(e.createdAt), MONTH(e.createdAt), COUNT(e) FROM Enquiry e WHERE e.deleted = false AND e.createdAt >= :startDate GROUP BY YEAR(e.createdAt), MONTH(e.createdAt)")
+    List<Object[]> countEnquiriesGroupedByYearAndMonth(@Param("startDate") LocalDateTime startDate);
 }
