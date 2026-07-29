@@ -99,6 +99,15 @@ public interface EnquiryRepository extends JpaRepository<Enquiry, UUID>, JpaSpec
     long countByEventDateGreaterThanEqualAndStatusAndDeletedFalse(LocalDate today, EnquiryStatus status);
 
     /**
+     * Count upcoming events where event date is on or after today and status is not in excluded list.
+     *
+     * @param today current date
+     * @param excludedStatuses Collection of EnquiryStatus to exclude (e.g. CANCELLED, COMPLETED)
+     * @return count long
+     */
+    long countByEventDateGreaterThanEqualAndStatusNotInAndDeletedFalse(LocalDate today, java.util.Collection<EnquiryStatus> excludedStatuses);
+
+    /**
      * Count upcoming events where event date is on or after today and status is not CANCELLED.
      *
      * @param today current date
