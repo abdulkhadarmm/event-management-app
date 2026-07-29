@@ -131,7 +131,7 @@ Planning luxury weddings, corporate galas, milestone birthdays, and grand recept
 ### Backend (Java / Spring Boot)
 - **Java 21**: Modern Java syntax, records, pattern matching, and virtual thread readiness.
 - **Spring Boot 3.3.2**: Spring Web REST APIs, Jackson JSON serialization, and annotation-driven service layers.
-- **Spring Security 6 & JWT**: Stateless JWT token authentication, BCrypt password encryption, and Role-Based Access Control (`ROLE_ADMIN`, `ROLE_CUSTOMER`).
+- **Spring Security 6 & JWT**: Stateless JWT token authentication, BCrypt password encryption, and Role-Based Access Control (`ROLE_ADMIN`).
 - **Spring Data JPA & Hibernate**: Relational ORM mapping, custom JPQL queries, and HikariCP connection pooling.
 - **AI Event Planning Integration**: Custom AI Service calling REST endpoints to generate JSON event blueprints.
 
@@ -165,8 +165,8 @@ Planning luxury weddings, corporate galas, milestone birthdays, and grand recept
 
 | Table | Primary Key | Description |
 |---|---|---|
-| `users` | `UUID` | Stores system administrator and client user accounts with BCrypt passwords |
-| `roles` | `Long` | RBAC security roles (`ROLE_ADMIN`, `ROLE_CUSTOMER`) |
+| `users` | `UUID` | Stores system administrator credentials (used for securing the Admin Portal) |
+| `roles` | `UUID` | System authorization roles (`ROLE_ADMIN`) used for Spring Security RBAC access control |
 | `user_roles` | Composite | Join table mapping users to security roles |
 | `event_types` | `UUID` | Event category classifications (Wedding, Corporate, Birthday, etc.) |
 | `event_packages` | `UUID` | Service pricing tiers in ₹ INR (Silver, Gold, Platinum) |
@@ -246,6 +246,4 @@ npm run dev
 
 ---
 
-## 📜 License & Copyright
 
-Designed and engineered for **EventEasy Architecture & Platform**. All rights reserved.
