@@ -104,8 +104,8 @@ export const FAQSection = () => {
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
-            gap: '16px',
+            gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)',
+            gap: isMobile ? '16px' : '20px',
             alignItems: 'start',
             width: '100%',
           }}
