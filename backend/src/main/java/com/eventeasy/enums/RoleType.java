@@ -7,6 +7,5 @@ package com.eventeasy.enums;
  * @version 1.0.0
  */
 public enum RoleType {
-    ROLE_ADMIN,
-    ROLE_CUSTOMER
+    ROLE_ADMIN
 }

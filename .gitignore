@@ -29,6 +29,7 @@ pnpm-debug.log*
 *.pem
 *.key
 *.crt
+*.sql
 
 # Local Spring Boot Secret Properties (Ignored by Git for Security)
 **/application-local.properties
